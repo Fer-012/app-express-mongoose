@@ -38,5 +38,21 @@ router.get('/:name',async (req,res)=>{
     }
 });
 
+router.put('/:name',async (req,res)=>{
+    try{
+        const name = req.params.name;
+        const user = await
+        User.findOneAndUpdate
+        ({name},req.body,{new:true});
+        if(user){
+            res.status(200).send(user);
+        }else{
+            res.status(404).send({message:"User not found"});
+        }
+    }catch(err){
+        res.status(404).send({message:err.message});
+    }
+})
+
 // Exporting the router to be used in other files
 module.exports = router;
