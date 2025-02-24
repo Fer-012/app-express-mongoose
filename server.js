@@ -9,3 +9,8 @@ mongoose.connect(process.env.MONGO_URI).then(() => {
 }).catch((err) => {
     console.log('error connecting to DataBase',err);
 });
+
+
+app.listen(PORT, () => {
+    console.log('Server is running on port 5000');
+});
