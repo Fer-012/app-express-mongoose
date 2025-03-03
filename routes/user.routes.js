@@ -38,25 +38,24 @@ router.get('/:name', async (req, res) => {
 });
 
 
-router.put('/:name', async (req, res) => {
+
+router.put('/update/:name', async (req, res) => {
     try {
-        const user = await User.findOneAndUpdate(
-            { name: req.params.name },
-            req.body,
-            { new: true }
-        );
-        if (user) {
-            res.status(200).send(user);
-        } else {
+        const name = req.params.name;
+        const user = await User.findOne({ name });
+        if (!user) {
             res.status(404).send({ message: 'User not found' });
         }
-    } catch (err) {
+        const userUpdated = await User.findOneAndUpdate({name},{ $set:{name:req?.body?.name || 'ali' }},{new:true});
+        res.status(200).send({ message: 'User updated successfully', userUpdated });
+    }
+    catch (err) {
         res.status(500).send({ message: err.message });
     }
 });
 
 
-router.delete('/:name', async (req, res) => {
+router.delete('/delete/:name', async (req, res) => {
     try {
         const user = await User.findOneAndDelete({ name: req.params.name });
         if (user) {
