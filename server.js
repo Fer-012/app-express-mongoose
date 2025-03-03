@@ -3,9 +3,11 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 const app = express();
 const UserRoute = require('./routes/user.routes');
+const AuthRoute = require('./routes/auth.routes');
 const PORT= process.env.PORT || 3000;
 app.use(express.json());
 app.use('/users',UserRoute);
+app.use('/auth',AuthRoute);
 
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
