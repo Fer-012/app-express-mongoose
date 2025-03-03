@@ -37,8 +37,6 @@ router.get('/:name', async (req, res) => {
     }
 });
 
-
-
 router.put('/update/:name', async (req, res) => {
     try {
         const name = req.params.name;
@@ -57,12 +55,13 @@ router.put('/update/:name', async (req, res) => {
 
 router.delete('/delete/:name', async (req, res) => {
     try {
-        const user = await User.findOneAndDelete({ name: req.params.name });
-        if (user) {
-            res.status(200).send({ message: 'User deleted successfully' });
-        } else {
+        const name = req.params.name;
+        const user = await User.findOneAndDelete({name});
+        if (!user) {
             res.status(404).send({ message: 'User not found' });
         }
+        await User.deleteOne({ name });
+        res.status(200).send({ message: 'User deleted successfully', user });
     } catch (err) {
         res.status(500).send({ message: err.message });
     }
