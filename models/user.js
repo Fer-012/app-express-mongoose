@@ -38,3 +38,4 @@ userSchema.methods.comparePassword = async function (password) {
 module.exports = mongoose.model('User', userSchema);
 //hash is a one way function which converts the password into a random string of characters 
 //methode compare  
+//jwt is a library which is used to generate tokens for authentication 
